@@ -1,22 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+
+import './question.dart';
 
 void main() {
-  runApp(MaterialApp(
-    title: "OSM App",
-    home: HomePage(),
-  ));
+  runApp(MyApp()); //instance passed
 }
 
-class HomePage extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  var questionlist = ["kastro fen ano?", "psyco fen ano"];
+
+  void updateQuestion() {
+    setState(() {
+      if (questionIndex == 0)
+        questionIndex = 1;
+      else
+        questionIndex = 0;
+    });
+  }
+
+  var questionIndex = 0;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MaterialApp(
+      home: Scaffold(
         appBar: AppBar(
-          title: Text("hi flutter"),
+          title: Text('The Title'),
         ),
-        body: Container(
-          child: Center(child: Text("Hi Flutter  da")),
-        ));
+        body: Column(
+          children: [
+            Question(questionlist[questionIndex]),
+            RaisedButton(child: Text("kastro"), onPressed: updateQuestion),
+            RaisedButton(child: Text("Psyco"), onPressed: updateQuestion),
+            RaisedButton(child: Text("Njana"), onPressed: updateQuestion),
+          ],
+        ),
+      ),
+    );
   }
 }
